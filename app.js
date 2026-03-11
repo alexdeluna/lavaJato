@@ -26,13 +26,23 @@ document.getElementById("menu").style.display="block"
 
 }
 
+
+function limparNumero(numero){
+
+return numero.replace(/\D/g,'')
+
+}
+
+
 function registrarLavagem(){
 
 let placa = document.getElementById("placa").value.toUpperCase()
 let nome = document.getElementById("nome").value
-let telefone = document.getElementById("telefone").value
+let telefoneDigitado = document.getElementById("telefone").value
 
 if(!placa) return alert("Digite a placa")
+
+let telefone = limparNumero(telefoneDigitado)
 
 let agora = new Date()
 
@@ -49,13 +59,14 @@ banco.push(registro)
 
 localStorage.setItem("lavagens",JSON.stringify(banco))
 
-alert("Lavagem registrada")
+alert("Lavagem registrada com sucesso")
 
 document.getElementById("placa").value=""
 document.getElementById("nome").value=""
 document.getElementById("telefone").value=""
 
 }
+
 
 function consultarVeiculo(){
 
@@ -93,6 +104,8 @@ historico += `<div>${d.toLocaleDateString()} ${d.toLocaleTimeString()}</div>`
 
 })
 
+let numeroLimpo = limparNumero(cliente.telefone)
+
 resultado.innerHTML = `
 
 <div class="card">
@@ -101,7 +114,7 @@ resultado.innerHTML = `
 
 Cliente: ${cliente.nome}<br>
 
-Telefone: ${cliente.telefone}<br>
+Telefone: ${numeroLimpo}<br>
 
 Última lavagem: ${dataUltima.toLocaleDateString()}<br>
 
@@ -111,7 +124,7 @@ ${alerta}
 
 <br><br>
 
-<a href="https://wa.me/${cliente.telefone}" target="_blank">
+<a href="https://wa.me/${numeroLimpo}" target="_blank">
 
 <button>Chamar no WhatsApp</button>
 
