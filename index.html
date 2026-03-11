@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Lava Jato Controle</title>
+
+<link rel="stylesheet" href="visual.css">
+<link rel="manifest" href="manifest.json">
+
+</head>
+
+<body>
+
+<header>
+
+<h1>Controle Lava-Jato</h1>
+
+</header>
+
+<main>
+
+<section class="formulario">
+
+<input type="text" id="placa" placeholder="Placa do veículo">
+
+<input type="text" id="nome" placeholder="Nome do proprietário">
+
+<input type="tel" id="telefone" placeholder="Telefone">
+
+<button onclick="salvar()">Registrar Lavagem</button>
+
+</section>
+
+<section>
+
+<h2>Últimos Registros</h2>
+
+<div id="lista"></div>
+
+</section>
+
+</main>
+
+<script src="app.js"></script>
+
+</body>
+</html>
