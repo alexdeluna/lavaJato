@@ -5,9 +5,7 @@ function abrirTela(tela){
 document.getElementById("menu").style.display="none"
 
 document.querySelectorAll(".tela").forEach(t=>{
-
 t.style.display="none"
-
 })
 
 document.getElementById(tela).style.display="block"
@@ -17,9 +15,7 @@ document.getElementById(tela).style.display="block"
 function voltarMenu(){
 
 document.querySelectorAll(".tela").forEach(t=>{
-
 t.style.display="none"
-
 })
 
 document.getElementById("menu").style.display="block"
@@ -27,22 +23,44 @@ document.getElementById("menu").style.display="block"
 }
 
 
+
+/* =========================
+FUNÇÕES DE NORMALIZAÇÃO
+========================= */
+
 function limparNumero(numero){
 
 return numero.replace(/\D/g,'')
 
 }
 
+function limparPlaca(placa){
+
+return placa.toUpperCase().replace(/\s+/g,'')
+
+}
+
+
+
+/* =========================
+REGISTRAR LAVAGEM
+========================= */
 
 function registrarLavagem(){
 
-let placa = document.getElementById("placa").value.toUpperCase()
-let nome = document.getElementById("nome").value
+let placaDigitada = document.getElementById("placa").value
+let nome = document.getElementById("nome").value.trim()
 let telefoneDigitado = document.getElementById("telefone").value
 
-if(!placa) return alert("Digite a placa")
-
+let placa = limparPlaca(placaDigitada)
 let telefone = limparNumero(telefoneDigitado)
+
+if(!placa){
+
+alert("Digite a placa do veículo")
+return
+
+}
 
 let agora = new Date()
 
@@ -68,9 +86,16 @@ document.getElementById("telefone").value=""
 }
 
 
+
+/* =========================
+CONSULTAR VEÍCULO
+========================= */
+
 function consultarVeiculo(){
 
-let placa = document.getElementById("placaConsulta").value.toUpperCase()
+let placaDigitada = document.getElementById("placaConsulta").value
+
+let placa = limparPlaca(placaDigitada)
 
 let registros = banco.filter(r=>r.placa===placa)
 
@@ -92,7 +117,9 @@ let dataUltima = new Date(ultima.data)
 
 let dias = (Date.now()-dataUltima)/(1000*60*60*24)
 
-let alerta = dias>15 ? "<div class='alerta'>Cliente pode ser chamado novamente</div>" : ""
+let alerta = dias>15 
+? "<div class='alerta'>Cliente pode ser chamado novamente</div>" 
+: ""
 
 let historico=""
 
@@ -104,7 +131,7 @@ historico += `<div>${d.toLocaleDateString()} ${d.toLocaleTimeString()}</div>`
 
 })
 
-let numeroLimpo = limparNumero(cliente.telefone)
+let numeroWhats = limparNumero(cliente.telefone)
 
 resultado.innerHTML = `
 
@@ -114,7 +141,7 @@ resultado.innerHTML = `
 
 Cliente: ${cliente.nome}<br>
 
-Telefone: ${numeroLimpo}<br>
+Telefone: ${numeroWhats}<br>
 
 Última lavagem: ${dataUltima.toLocaleDateString()}<br>
 
@@ -124,7 +151,7 @@ ${alerta}
 
 <br><br>
 
-<a href="https://wa.me/${numeroLimpo}" target="_blank">
+<a href="https://wa.me/55${numeroWhats}" target="_blank">
 
 <button>Chamar no WhatsApp</button>
 
